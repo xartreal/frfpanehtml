@@ -17,6 +17,7 @@ type TParams struct {
 	Singlemode   bool
 	IndexPrefix  string
 	IndexPostfix string
+	LocalLink    string
 }
 
 var Params TParams
@@ -191,8 +192,12 @@ func (post *XPost) ToHtml(id, pen string) string {
 	//comments
 	commHtml := post.genCommentsHtml(pen)
 	//assembly
+	LLink := ""
+	if len(Params.LocalLink) > 0 {
+		LLink = strings.Replace(Params.LocalLink, "$id", id, -1)
+	}
 	tmap := TXLines{"text": highlighter(striptags(post.PostJson.Posts.Body), pen), //post
-		"auname": ghtml + uuname, "id": id, "time_html": xtime, //b-line
+		"auname": ghtml + uuname, "id": id, "time_html": xtime, "local_link": LLink, //b-line
 		"attach_html": attachHtml, "likes_html": likesHtml, "comm_html": commHtml, //attachs,likes,comments
 	}
 	return GenTplPage(Templates.Item, tmap)
