@@ -129,10 +129,10 @@ func (post *XPost) genAttachHtml() string {
 	}
 	for _, p := range post.PostJson.Attachments {
 		file := p.ID + path.Ext(p.URL)
+		imgsrc := prefix + file
 		if p.MediaType != "image" {
-			attachHtml += "<a href=" + prefix + "media_" + file + "> Media file </a><br>\n"
+			attachHtml += "<a href=" + imgsrc + "> Media file </a><br>\n"
 		} else {
-			imgsrc := prefix + `image_` + file
 			attachHtml += `<a href="` + imgsrc + `">` + `<img width=233 height=175 src="` + imgsrc + `"></a><br>` + "\n"
 		}
 	}
